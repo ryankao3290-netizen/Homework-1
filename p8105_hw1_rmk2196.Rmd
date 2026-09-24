@@ -31,7 +31,52 @@ It has 344 rows and 8 columns, meaning that there are 344 samples and 8 differen
 
 The average flipper length is 200.9152 mm.
 
+```{r}
+scatterplot = ggplot(data = penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+  geom_point() +
+  labs(title = "Flipper Length vs. Bill Length in Penguins",
+       x = "Bill Length (mm)",
+       y = "Flipper Length (mm)",
+       color = "Species")
+
+scatterplot
+
+ggsave("penguins_scatterplot.png", plot = scatterplot, width = 7, height = 5)
+```
+Scatter plot saved.
+
 
 ## Question 2
 
+```{r}
+set.seed(123)
 
+prob2_df <- tibble(
+  norm_samp = rnorm(10),                      
+  vec_gt_zero = norm_samp > 0,                
+  vec_char = c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 
+  vec_factor = factor(rep(c("low", "med", "high"), length.out = 10))
+)
+```
+
+4 types of vectors are made
+
+```{r}
+mean(pull(prob2_df, norm_samp))#0.07462564
+
+mean(pull(prob2_df, vec_gt_zero))#0.5 proportion of true
+
+mean(pull(prob2_df, vec_char))#NA
+
+mean(pull(prob2_df, vec_factor))#NA
+```
+The numeric vector works normally, and logical one works too as it gives the proportion of true in the sample. The character and factor fail and return NA, which makes sense because these cannot be averaged. 
+
+```{r}
+as.numeric(pull(prob2_df, vec_gt_zero))
+as.numeric(pull(prob2_df, vec_char))
+as.numeric(pull(prob2_df, vec_factor))
+```
+Logical vectors became numeric as true becomes 1 and false becomes 0. When character becomes numeric it returns NA, likely because letters cannot be converted into numbers. Factor was converted to numbers 1, 2, and 3. 
+
+It makes sense as character cannot be convert to numbers so that the mean could not be computed. For Factors even though the underlying code has a number, it doesn't allow the calculation of mean likely because rstudio doesn't want to calculate categorical data to give false calculation conclusion.  
