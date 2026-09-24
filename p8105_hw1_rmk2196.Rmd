@@ -6,24 +6,32 @@ date: "2026-09-24"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
 ```
 
-## R Markdown
+## Question 1
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
+data("penguins", package = "palmerpenguins")
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+view(penguins)
 
-```{r cars}
-summary(cars)
+nrow(penguins)
+ncol(penguins)
+
+penguins |>  
+  pull(flipper_length_mm) |> 
+  mean(na.rm = TRUE)
 ```
 
-## Including Plots
+The penguins dataset includes the species, island, bill lengths, bill depth, flipper length, body mass, sex, and the year.
 
-You can also embed plots, for example:
+It has 344 rows and 8 columns, meaning that there are 344 samples and 8 different variables.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+The average flipper length is 200.9152 mm.
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Question 2
+
+
